@@ -593,7 +593,7 @@ public enum ErrorMessageEnum implements BaseMessage {
     }
 
     @Override
-    public String getTite() {
+    public String getTitle() {
         return "錯誤訊息";
     }
 

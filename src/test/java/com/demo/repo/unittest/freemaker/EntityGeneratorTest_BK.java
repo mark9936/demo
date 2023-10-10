@@ -7,7 +7,6 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,7 +36,7 @@ import org.springframework.util.StringUtils;
 
 @Slf4j
 @ContextConfiguration(classes = ApplicationConfig.class)
-public class EntityGeneratorTest extends AbstractIntegrationTest {
+public class EntityGeneratorTest_BK extends AbstractIntegrationTest {
 
     /**
      * The data source.
@@ -69,55 +68,87 @@ public class EntityGeneratorTest extends AbstractIntegrationTest {
 //    @Disabled
     @Test
     public void testEntityGenerator() throws Exception {
-        try (Connection conn = dataSource.getConnection()) {
-            setupTemplatePath();
 
+        try (Connection conn = dataSource.getConnection()) {
+            String templatePath = this.getClass().getResource("/freemaker").getPath();
+            templatePath = templatePath.replace("%20", " ");
+            conf.setDirectoryForTemplateLoading(new File(templatePath));
+
+            // 取得 Table
             List<TableBean> tableBeans = this.listTableBeans(conn);
             AtomicInteger atomicInteger = new AtomicInteger(0);
-
             for (TableBean tableBean : tableBeans) {
-                log.debug(String.format("== 處理 Table(%d/%d)：%s",
-                        atomicInteger.incrementAndGet(), tableBeans.size(), tableBean.getTable()));
+                log.debug(
+                        "== 處理 Table(" + atomicInteger.incrementAndGet() + "/" + tableBeans.size()
+                                + ")：" + tableBean.getTable());
 
+                // 取得欄位
                 List<ColumnBean> columnBeans = this.readColumnTableInfo(conn, tableBean);
                 columnBeans.sort(Comparator.comparing(ColumnBean::getOrdinal));
-
                 tableBean.setColumnBeans(columnBeans);
+                // Process
                 tableBean.setBaseEntity(this.processBaseEntity(columnBeans));
                 tableBean.setLocalDate(this.processDate(columnBeans, "LocalDate"));
                 tableBean.setLocalDateTime(this.processDate(columnBeans, "LocalDateTime"));
 
-                List<CompletableFuture<Void>> futures = new ArrayList<>();
-                for (String type : Arrays.asList("Entity", "Repository", "Mapper", "Bean",
-                        "Service", "ServiceImpl")) {
-                    futures.add(buildAsync(tableBean, type));
-                }
+                CompletableFuture<Void> buildEntityOp = CompletableFuture.runAsync(() -> {
+                    try {
+                        this.build(tableBean, "Entity");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
 
-                CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+                CompletableFuture<Void> buildRepositoryOp = CompletableFuture.runAsync(() -> {
+                    try {
+                        this.build(tableBean, "Repository");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                CompletableFuture<Void> buildMapperOp = CompletableFuture.runAsync(() -> {
+                    try {
+                        this.build(tableBean, "Mapper");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                CompletableFuture<Void> buildBeanOp = CompletableFuture.runAsync(() -> {
+                    try {
+                        this.build(tableBean, "Bean");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                CompletableFuture<Void> buildServiceOp = CompletableFuture.runAsync(() -> {
+                    try {
+                        this.build(tableBean, "Service");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                CompletableFuture<Void> buildServiceImplOp = CompletableFuture.runAsync(() -> {
+                    try {
+                        this.build(tableBean, "ServiceImpl");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                CompletableFuture.allOf(buildServiceOp, buildServiceImplOp, buildRepositoryOp,
+                        buildEntityOp, buildBeanOp, buildMapperOp).join();
             }
         } catch (Exception e) {
             log.error("", e);
             throw e;
         }
+
         log.debug("finish");
     }
-
-    private void setupTemplatePath() throws IOException {
-        String templatePath = this.getClass().getResource("/freemaker").getPath();
-        templatePath = templatePath.replace("%20", " ");
-        conf.setDirectoryForTemplateLoading(new File(templatePath));
-    }
-
-    private CompletableFuture<Void> buildAsync(TableBean tableBean, String type) {
-        return CompletableFuture.runAsync(() -> {
-            try {
-                this.build(tableBean, type);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
 
     private StringBuilder typeOfDbMapper(Connection conn) {
         StringBuilder sql = new StringBuilder();

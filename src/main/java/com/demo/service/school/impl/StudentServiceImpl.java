@@ -2,7 +2,7 @@ package com.demo.service.school.impl;
 
 import com.demo.bean.school.StudentBean;
 import com.demo.dao.school.SchoolDao;
-import com.demo.mapper.school.StudentMapper;
+import com.demo.mapstruct.mapper.school.StudentMapper;
 import com.demo.mapstruct.MapStructService;
 import com.demo.repository.school.StudentRepository;
 import com.demo.service.school.StudentService;

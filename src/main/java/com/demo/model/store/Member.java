@@ -3,7 +3,6 @@ package com.demo.model.store;
 import java.io.Serializable;
 
 
-
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -31,36 +30,52 @@ public class Member implements Serializable {
 
     private static final long serialVersionUID = 3671422285564436411L;
 
-    /** mId */
+    /**
+     * mId
+     */
     @Id
     @Column(name = "mId")
     private String mId;
 
-    /** pId */
+    /**
+     * pId
+     */
     @Column(name = "pId")
     private String pId;
 
-    /** name */
+    /**
+     * name
+     */
     @Column(name = "name")
     private String name;
 
-    /** birthday */
+    /**
+     * birthday
+     */
     @Column(name = "birthday")
     private LocalDateTime birthday;
 
-    /** phone */
+    /**
+     * phone
+     */
     @Column(name = "phone")
     private String phone;
 
-    /** address */
+    /**
+     * address
+     */
     @Column(name = "address")
     private String address;
 
-    /** email */
+    /**
+     * email
+     */
     @Column(name = "email")
     private String email;
 
-    /** introducer */
+    /**
+     * introducer
+     */
     @Column(name = "introducer")
     private String introducer;
 

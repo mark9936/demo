@@ -5,7 +5,7 @@ public class CommonConstants {
     /**
      * 系統代碼.
      */
-    public static final String SYS_CODE = "WO";
+    public static final String SYS_CODE = "";
 
     /** ------------ Symbol ------------ */
     /**

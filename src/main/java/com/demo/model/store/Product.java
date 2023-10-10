@@ -3,7 +3,6 @@ package com.demo.model.store;
 import java.io.Serializable;
 
 
-
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -32,56 +31,82 @@ public class Product implements Serializable {
 
     private static final long serialVersionUID = 2057112514747272737L;
 
-    /** pro_id */
+    /**
+     * pro_id
+     */
     @Id
     @Column(name = "pro_id")
     private Integer pro_id;
 
-    /** pNo */
+    /**
+     * pNo
+     */
     @Column(name = "pNo")
     private String pNo;
 
-    /** name */
+    /**
+     * name
+     */
     @Column(name = "name")
     private String name;
 
-    /** pName */
+    /**
+     * pName
+     */
     @Column(name = "pName")
     private String pName;
 
-    /** desc */
+    /**
+     * desc
+     */
     @Column(name = "desc")
     private String desc;
 
-    /** unitPrice */
+    /**
+     * unitPrice
+     */
     @Column(name = "unitPrice")
     private BigDecimal unitPrice;
 
-    /** price */
+    /**
+     * price
+     */
     @Column(name = "price")
     private BigDecimal price;
 
-    /** catalog */
+    /**
+     * catalog
+     */
     @Column(name = "catalog")
     private String catalog;
 
-    /** item_model */
+    /**
+     * item_model
+     */
     @Column(name = "item_model")
     private String item_model;
 
-    /** status */
+    /**
+     * status
+     */
     @Column(name = "status")
     private Integer status;
 
-    /** created_date */
+    /**
+     * created_date
+     */
     @Column(name = "created_date")
     private LocalDateTime created_date;
 
-    /** last_updated_date */
+    /**
+     * last_updated_date
+     */
     @Column(name = "last_updated_date")
     private LocalDateTime last_updated_date;
 
-    /** last_updated_by */
+    /**
+     * last_updated_by
+     */
     @Column(name = "last_updated_by")
     private Integer last_updated_by;
 

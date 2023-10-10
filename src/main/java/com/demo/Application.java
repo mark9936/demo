@@ -1,5 +1,6 @@
 package com.demo;
 
+import java.io.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,7 @@ import java.net.UnknownHostException;
 
 @SpringBootApplication
 public class Application {
+
     @Autowired
     Environment environment;
 
@@ -36,5 +38,21 @@ public class Application {
         // Remote address
         System.out.println(InetAddress.getLoopbackAddress().getHostAddress());
         System.out.println(InetAddress.getLoopbackAddress().getHostName());
+
+        String baseDir = "src/test/java/";
+        String packageName = this.getClass().getPackage().getName();
+        String className = this.getClass().getSimpleName();
+
+        System.out.println("-----------baseDir:" + baseDir);
+        System.out.println("-----------packageName:" + packageName);
+        System.out.println("-----------className:" + className);
+
+        String path = baseDir + packageName.replace('.', '/') + "/" + className + ".java";
+        System.out.println("-----------path:" + path);
+
+        File file = new File(this.getClass().getResource("/").getPath()).getParentFile()
+                .getParentFile();
+        System.out.println("-----------file.getPath():" + file.getPath());
+
     }
 }

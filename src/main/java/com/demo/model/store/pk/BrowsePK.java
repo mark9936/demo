@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class BrowsePK implements Serializable {
+
     private String mId;
 
     private String pNo;
