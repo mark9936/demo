@@ -1,8 +1,8 @@
-package com.demo.config;
+package com.demo.config.jpa;
 
-import static com.demo.util.constants.DBConstants.SCHOOL_DATA_SOURCE;
-import static com.demo.util.constants.DBConstants.SCHOOL_ENTITY_MANAGER_FACTORY;
-import static com.demo.util.constants.DBConstants.SCHOOL_TRANSACTION_MANAGER;
+import static com.demo.util.constants.DBConstants.STORE_DATA_SOURCE;
+import static com.demo.util.constants.DBConstants.STORE_ENTITY_MANAGER_FACTORY;
+import static com.demo.util.constants.DBConstants.STORE_TRANSACTION_MANAGER;
 
 import com.demo.util.SourceProperties;
 import com.zaxxer.hikari.HikariConfig;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -26,39 +27,41 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = {"com.demo.repository.school"},
-        entityManagerFactoryRef = SCHOOL_ENTITY_MANAGER_FACTORY,
-        transactionManagerRef = SCHOOL_TRANSACTION_MANAGER
+        basePackages = {"com.demo.repository.store"},
+        entityManagerFactoryRef = STORE_ENTITY_MANAGER_FACTORY,
+        transactionManagerRef = STORE_TRANSACTION_MANAGER
 )
-public class SchoolJPAConfig {
+public class StoreJPAConfig {
 
-    @Bean(name = "schoolProperties")
-    @ConfigurationProperties(prefix = "spring.datasource.school")
-    public SourceProperties schoolProperties() {
+    @Bean(name = "storeProperties")
+    @ConfigurationProperties(prefix = "spring.datasource.store")
+    public SourceProperties storeProperties() {
         return new SourceProperties();
     }
 
-    @Bean(name = SCHOOL_DATA_SOURCE)
-    public DataSource SCHOOL_DATA_SOURCE(
-            @Qualifier("schoolProperties") SourceProperties properties) {
+    @Primary
+    @Bean(name = STORE_DATA_SOURCE)
+    public DataSource STORE_DATA_SOURCE(
+            @Qualifier("storeProperties") SourceProperties properties) {
         HikariConfig config = new HikariConfig();
         applyProperties(config, properties);
         return new HikariDataSource(config);
     }
 
-    @Bean(name = "schoolJpaVendorAdapter")
-    public JpaVendorAdapter schoolJpaVendorAdapter(
-            @Qualifier("schoolProperties") SourceProperties properties) {
+    @Primary
+    @Bean(name = "storeJpaVendorAdapter")
+    public JpaVendorAdapter storeJpaVendorAdapter(
+            @Qualifier("storeProperties") SourceProperties properties) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setDatabase(Database.MYSQL);
+        vendorAdapter.setDatabase(Database.SQL_SERVER);
         vendorAdapter.setDatabasePlatform(properties.getDatabasePlatform());
         vendorAdapter.setShowSql(properties.isShowSql());
         vendorAdapter.setGenerateDdl(properties.isGenerateDdl());
         return vendorAdapter;
     }
 
-    @Bean(name = "schoolJpaProperties")
-    public Properties schoolJpaProperties() {
+    @Bean(name = "storeJpaProperties")
+    public Properties storeJpaProperties() {
         Properties jpaProps = new Properties();
         jpaProps.put("hibernate.jdbc.batch_size", "100");
         jpaProps.put("hibernate.order_inserts", "true");
@@ -66,21 +69,23 @@ public class SchoolJPAConfig {
         return jpaProps;
     }
 
-    @Bean(name = SCHOOL_ENTITY_MANAGER_FACTORY)
-    public LocalContainerEntityManagerFactoryBean SCHOOL_ENTITY_MANAGER_FACTORY(
-            @Qualifier(SCHOOL_DATA_SOURCE) DataSource dataSource,
-            @Qualifier("schoolJpaVendorAdapter") JpaVendorAdapter jpaVendorAdapter) {
+    @Primary
+    @Bean(name = STORE_ENTITY_MANAGER_FACTORY)
+    public LocalContainerEntityManagerFactoryBean storeDBEntityManagerFactory(
+            @Qualifier(STORE_DATA_SOURCE) DataSource dataSource,
+            @Qualifier("storeJpaVendorAdapter") JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setJpaVendorAdapter(jpaVendorAdapter);
-        em.setPackagesToScan("com.demo.model.school");
+        em.setPackagesToScan("com.demo.model.store");
         em.setDataSource(dataSource);
-        em.setJpaProperties(this.schoolJpaProperties());
+        em.setJpaProperties(this.storeJpaProperties());
         return em;
     }
 
-    @Bean(name = SCHOOL_TRANSACTION_MANAGER)
-    public PlatformTransactionManager SCHOOL_TRANSACTION_MANAGER(
-            @Qualifier(SCHOOL_ENTITY_MANAGER_FACTORY) EntityManagerFactory entityManagerFactory) {
+    @Primary
+    @Bean(name = STORE_TRANSACTION_MANAGER)
+    public PlatformTransactionManager storeDBTransactionManager(
+            @Qualifier(STORE_ENTITY_MANAGER_FACTORY) EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 

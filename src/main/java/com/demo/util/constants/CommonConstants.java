@@ -5,9 +5,9 @@ public class CommonConstants {
     /**
      * 系統代碼.
      */
-    public static final String SYS_CODE = "";
+    public static final String SYS_CODE = "DEMO";
 
-    /** ------------ Symbol ------------ */
+    // ------------ Symbol ------------
     /**
      * Empty.
      */
@@ -152,5 +152,21 @@ public class CommonConstants {
      * The Constant YN_YES_EN.
      */
     public static final String YN_YES_EN = "Y";
+
+    // ------------MDC, BaseEntity------------
+    /**
+     * The Constant ALIAS_NAME.
+     */
+    public static final String ALIAS_NAME = "aliasName";
+
+    /**
+     * The Constant EMP_NO.
+     */
+    public static final String EMP_ID = "empId";
+
+    /**
+     * The Constant UNKNOWN.
+     */
+    public static final String UNKNOWN = "UNKNOWN";
 
 }
