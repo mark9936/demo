@@ -9,6 +9,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -35,28 +37,24 @@ public class AopConfiguration {
 
     private Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
-        String targetClassName = getTargetClassName(joinPoint);
-        String methodName = getMethodName(joinPoint);
 
-        log.info("== START " + targetClassName + "." + methodName);
-        log.info(methodName + " input: " + Arrays.toString(joinPoint.getArgs()));
+        // 獲取類名和方法名
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Class<?> declaringType = signature.getDeclaringType();
+        String targetClassName = declaringType.getSimpleName();
+        String methodName = signature.getMethod().getName() + "()";
+
+        // 使用LoggerFactory來確保logger的類型正確
+        Logger logger = LoggerFactory.getLogger(declaringType);
+        logger.info("== START " + targetClassName + "." + methodName);
+        logger.info(methodName + " input: " + Arrays.toString(joinPoint.getArgs()));
 
         Object result = joinPoint.proceed();
 
-        log.info("== END " + targetClassName + "." + methodName + "("
+        logger.info("== END " + targetClassName + "." + methodName + "("
                 + ((System.currentTimeMillis() - startTime) * 1d / 1000) + ")");
 
         return result;
-    }
-
-    private String getTargetClassName(ProceedingJoinPoint joinPoint) {
-        Object target = joinPoint.getTarget();
-        return target.getClass().getName();
-    }
-
-    private String getMethodName(ProceedingJoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        return signature.getMethod().getName() + "()";
     }
 
 }
