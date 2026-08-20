@@ -1,59 +1,67 @@
 package com.demo.model.school;
 
 import java.io.Serializable;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigInteger;
-import java.math.BigDecimal;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.GenericGenerator;
-
-/**
- * @Function: Textbook.java
- * @Description: Textbook Entity
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
-@Data
+/** 教科書資料。 */
 @Entity
-@Table(name = "TEXTBOOK")
-@NamedQuery(name = "Textbook.findAll", query = "SELECT c FROM Textbook c")
+@Table(name = "textbook")
 public class Textbook implements Serializable {
 
-    private static final long serialVersionUID = -5914013587438811180L;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * TextbookISBN
-     */
     @Id
     @Column(name = "TextbookISBN")
-    private Integer textbookISBN;
+    private Integer textbookIsbn;
 
-    /**
-     * TextbookTitle
-     */
     @Column(name = "TextbookTitle")
     private String textbookTitle;
 
-    /**
-     * TextbookAuthor
-     */
     @Column(name = "TextbookAuthor")
     private String textbookAuthor;
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+    public Textbook() {
     }
 
+    public Textbook(Integer textbookIsbn, String textbookTitle, String textbookAuthor) {
+        this.textbookIsbn = textbookIsbn;
+        this.textbookTitle = textbookTitle;
+        this.textbookAuthor = textbookAuthor;
+    }
+
+    public Integer getTextbookIsbn() {
+        return textbookIsbn;
+    }
+
+    public void setTextbookIsbn(Integer textbookIsbn) {
+        this.textbookIsbn = textbookIsbn;
+    }
+
+    public String getTextbookTitle() {
+        return textbookTitle;
+    }
+
+    public void setTextbookTitle(String textbookTitle) {
+        this.textbookTitle = textbookTitle;
+    }
+
+    public String getTextbookAuthor() {
+        return textbookAuthor;
+    }
+
+    public void setTextbookAuthor(String textbookAuthor) {
+        this.textbookAuthor = textbookAuthor;
+    }
+
+    @Override
+    public String toString() {
+        return "Textbook{" +
+                "textbookIsbn=" + textbookIsbn +
+                ", textbookTitle='" + textbookTitle + '\'' +
+                ", textbookAuthor='" + textbookAuthor + '\'' +
+                '}';
+    }
 }

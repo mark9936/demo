@@ -1,12 +1,18 @@
 package com.demo.service.school;
 
-/**
- * @Function: CourseService.java
- * @Description: Course Service
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
+import com.demo.model.school.Course;
+import java.util.List;
+
+/** Course 的商業邏輯介面。 */
 public interface CourseService {
 
+    List<Course> findAll();
+
+    Course findById(Integer id);
+
+    Course create(Course course);
+
+    Course update(Integer id, Course course);
+
+    void delete(Integer id);
 }

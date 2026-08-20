@@ -1,12 +1,18 @@
 package com.demo.service.school;
 
-/**
- * @Function: CollegeService.java
- * @Description: College Service
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
+import com.demo.model.school.College;
+import java.util.List;
+
+/** College 的商業邏輯介面。 */
 public interface CollegeService {
 
+    List<College> findAll();
+
+    College findById(String id);
+
+    College create(College college);
+
+    College update(String id, College college);
+
+    void delete(String id);
 }

@@ -1,59 +1,67 @@
 package com.demo.model.school;
 
 import java.io.Serializable;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigInteger;
-import java.math.BigDecimal;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.GenericGenerator;
-
-/**
- * @Function: Interns.java
- * @Description: Interns Entity
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
-@Data
+/** 實習生資料。 */
 @Entity
-@Table(name = "INTERNS")
-@NamedQuery(name = "Interns.findAll", query = "SELECT c FROM Interns c")
+@Table(name = "interns")
 public class Interns implements Serializable {
 
-    private static final long serialVersionUID = -1802743118677229218L;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * InternID
-     */
     @Id
     @Column(name = "InternID")
-    private Integer internID;
+    private Integer internId;
 
-    /**
-     * PersonID
-     */
     @Column(name = "PersonID")
-    private Integer personID;
+    private Integer personId;
 
-    /**
-     * InternHourlyWage
-     */
     @Column(name = "InternHourlyWage")
     private Integer internHourlyWage;
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+    public Interns() {
     }
 
+    public Interns(Integer internId, Integer personId, Integer internHourlyWage) {
+        this.internId = internId;
+        this.personId = personId;
+        this.internHourlyWage = internHourlyWage;
+    }
+
+    public Integer getInternId() {
+        return internId;
+    }
+
+    public void setInternId(Integer internId) {
+        this.internId = internId;
+    }
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
+
+    public Integer getInternHourlyWage() {
+        return internHourlyWage;
+    }
+
+    public void setInternHourlyWage(Integer internHourlyWage) {
+        this.internHourlyWage = internHourlyWage;
+    }
+
+    @Override
+    public String toString() {
+        return "Interns{" +
+                "internId=" + internId +
+                ", personId=" + personId +
+                ", internHourlyWage=" + internHourlyWage +
+                '}';
+    }
 }

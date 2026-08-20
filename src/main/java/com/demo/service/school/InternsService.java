@@ -1,12 +1,18 @@
 package com.demo.service.school;
 
-/**
- * @Function: InternsService.java
- * @Description: Interns Service
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
+import com.demo.model.school.Interns;
+import java.util.List;
+
+/** Interns 的商業邏輯介面。 */
 public interface InternsService {
 
+    List<Interns> findAll();
+
+    Interns findById(Integer id);
+
+    Interns create(Interns interns);
+
+    Interns update(Integer id, Interns interns);
+
+    void delete(Integer id);
 }

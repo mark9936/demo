@@ -1,21 +1,22 @@
 package com.demo.service.school;
 
-import com.demo.bean.school.StudentBean;
+import com.demo.model.school.Student;
 import java.util.List;
 
-/**
- * @Function: StudentService.java
- * @Description: Student Service
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
+/** Student 的商業邏輯介面，定義完整 CRUD 與 DAO 查詢範例。 */
 public interface StudentService {
 
-    StudentBean findById(Integer id);
+    List<Student> findAll();
 
-    List<StudentBean> findAll();
+    Student findById(Integer id);
 
-    List<StudentBean> findBySpecificGPA(double start, double end);
+    Student create(Student student);
 
+    Student update(Integer id, Student student);
+
+    void delete(Integer id);
+
+    List<Student> findByGpaBetween(double minGpa, double maxGpa);
+
+    List<Student> search(String studentName, Double minGpa, Double maxGpa);
 }

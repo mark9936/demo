@@ -1,12 +1,18 @@
 package com.demo.service.school;
 
-/**
- * @Function: FacultyService.java
- * @Description: Faculty Service
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
+import com.demo.model.school.Faculty;
+import java.util.List;
+
+/** Faculty 的商業邏輯介面。 */
 public interface FacultyService {
 
+    List<Faculty> findAll();
+
+    Faculty findById(Integer id);
+
+    Faculty create(Faculty faculty);
+
+    Faculty update(Integer id, Faculty faculty);
+
+    void delete(Integer id);
 }

@@ -1,80 +1,108 @@
 package com.demo.model.school;
 
 import java.io.Serializable;
-
-
 import java.time.LocalDate;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigInteger;
-import java.math.BigDecimal;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.GenericGenerator;
-
-/**
- * @Function: Section.java
- * @Description: Section Entity
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
-@Data
+/** 開課班級資料。LocalDate 會對應到資料庫的日期型別。 */
 @Entity
-@Table(name = "SECTION")
-@NamedQuery(name = "Section.findAll", query = "SELECT c FROM Section c")
+@Table(name = "school_section")
 public class Section implements Serializable {
 
-    private static final long serialVersionUID = 7217945477799703404L;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * SectionID
-     */
     @Id
     @Column(name = "SectionID")
-    private Integer sectionID;
+    private Integer sectionId;
 
-    /**
-     * SectionDate
-     */
     @Column(name = "SectionDate")
     private LocalDate sectionDate;
 
-    /**
-     * RoomNumber
-     */
     @Column(name = "RoomNumber")
     private Integer roomNumber;
 
-    /**
-     * CourseID
-     */
     @Column(name = "CourseID")
-    private Integer courseID;
+    private Integer courseId;
 
-    /**
-     * BuildingID
-     */
     @Column(name = "BuildingID")
-    private Integer buildingID;
+    private Integer buildingId;
 
-    /**
-     * PersonID
-     */
     @Column(name = "PersonID")
-    private Integer personID;
+    private Integer personId;
+
+    public Section() {
+    }
+
+    public Section(Integer sectionId, LocalDate sectionDate, Integer roomNumber,
+                   Integer courseId, Integer buildingId, Integer personId) {
+        this.sectionId = sectionId;
+        this.sectionDate = sectionDate;
+        this.roomNumber = roomNumber;
+        this.courseId = courseId;
+        this.buildingId = buildingId;
+        this.personId = personId;
+    }
+
+    public Integer getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Integer sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public LocalDate getSectionDate() {
+        return sectionDate;
+    }
+
+    public void setSectionDate(LocalDate sectionDate) {
+        this.sectionDate = sectionDate;
+    }
+
+    public Integer getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(Integer roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public Integer getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Integer buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+        return "Section{" +
+                "sectionId=" + sectionId +
+                ", sectionDate=" + sectionDate +
+                ", roomNumber=" + roomNumber +
+                ", courseId=" + courseId +
+                ", buildingId=" + buildingId +
+                ", personId=" + personId +
+                '}';
     }
-
 }

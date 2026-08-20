@@ -1,70 +1,94 @@
 package com.demo.model.school;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigInteger;
-import java.math.BigDecimal;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.GenericGenerator;
-
-/**
- * @Function: Faculty.java
- * @Description: Faculty Entity
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
- */
-@Data
+/** 教職員資料。 */
 @Entity
-@Table(name = "FACULTY")
-@NamedQuery(name = "Faculty.findAll", query = "SELECT c FROM Faculty c")
+@Table(name = "faculty")
 public class Faculty implements Serializable {
 
-    private static final long serialVersionUID = -3373152156474779400L;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * FacultyID
-     */
     @Id
     @Column(name = "FacultyID")
-    private Integer facultyID;
+    private Integer facultyId;
 
-    /**
-     * FacultyTitle
-     */
     @Column(name = "FacultyTitle")
     private String facultyTitle;
 
-    /**
-     * FacultySalary
-     */
     @Column(name = "FacultySalary")
     private Integer facultySalary;
 
-    /**
-     * FacultyName
-     */
     @Column(name = "FacultyName")
     private String facultyName;
 
-    /**
-     * PersonID
-     */
     @Column(name = "PersonID")
-    private Integer personID;
+    private Integer personId;
+
+    public Faculty() {
+    }
+
+    public Faculty(Integer facultyId, String facultyTitle, Integer facultySalary,
+                   String facultyName, Integer personId) {
+        this.facultyId = facultyId;
+        this.facultyTitle = facultyTitle;
+        this.facultySalary = facultySalary;
+        this.facultyName = facultyName;
+        this.personId = personId;
+    }
+
+    public Integer getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Integer facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public String getFacultyTitle() {
+        return facultyTitle;
+    }
+
+    public void setFacultyTitle(String facultyTitle) {
+        this.facultyTitle = facultyTitle;
+    }
+
+    public Integer getFacultySalary() {
+        return facultySalary;
+    }
+
+    public void setFacultySalary(Integer facultySalary) {
+        this.facultySalary = facultySalary;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+        return "Faculty{" +
+                "facultyId=" + facultyId +
+                ", facultyTitle='" + facultyTitle + '\'' +
+                ", facultySalary=" + facultySalary +
+                ", facultyName='" + facultyName + '\'' +
+                ", personId=" + personId +
+                '}';
     }
-
 }

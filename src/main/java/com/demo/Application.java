@@ -1,58 +1,25 @@
 package com.demo;
 
-import java.io.File;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.env.Environment;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-
+/**
+ * Spring Boot 應用程式的啟動類別。
+ *
+ * <p>{@link SpringBootApplication} 是三個 annotation 的組合：
+ * {@code @Configuration}、{@code @EnableAutoConfiguration} 與
+ * {@code @ComponentScan}。因此 Spring Boot 會自動尋找 Controller、Service
+ * 及 Repository 並建立物件。</p>
+ */
 @SpringBootApplication
 public class Application {
 
-    @Autowired
-    Environment environment;
-
-    // Port via annotation
-//    @Value("${server.port}")
-//    int aPort;
-    public static void main(String[] args) throws UnknownHostException {
+    /**
+     * Java 程式的進入點，也是啟動內嵌 Web Server 的地方。
+     *
+     * @param args 啟動程式時傳入的參數
+     */
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-
-        Application application = new Application();
-        System.out.println("-----------111");
-        application.somePlaceInTheCode();
-    }
-
-    public void somePlaceInTheCode() throws UnknownHostException {
-//        // Port
-//        System.out.println(environment.getProperty("server.port"));
-//
-        // Local address
-        System.out.println(InetAddress.getLocalHost().getHostAddress());
-        System.out.println(InetAddress.getLocalHost().getHostName());
-
-        // Remote address
-        System.out.println(InetAddress.getLoopbackAddress().getHostAddress());
-        System.out.println(InetAddress.getLoopbackAddress().getHostName());
-
-        String baseDir = "src/test/java/";
-        String packageName = this.getClass().getPackage().getName();
-        String className = this.getClass().getSimpleName();
-
-        System.out.println("-----------baseDir:" + baseDir);
-        System.out.println("-----------packageName:" + packageName);
-        System.out.println("-----------className:" + className);
-
-        String path = baseDir + packageName.replace('.', '/') + "/" + className + ".java";
-        System.out.println("-----------path:" + path);
-
-        File file = new File(this.getClass().getResource("/").getPath()).getParentFile()
-                .getParentFile();
-        System.out.println("-----------file.getPath():" + file.getPath());
-
     }
 }

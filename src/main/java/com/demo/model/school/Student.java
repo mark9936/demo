@@ -1,60 +1,82 @@
 package com.demo.model.school;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 /**
- * @Function: Student.java
- * @Description: Student Entity
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
+ * 學生資料，也是 README 中用來示範完整 CRUD 流程的主要 Entity。
  */
-@Data
 @Entity
-@Table(name = "STUDENT")
-@NamedQuery(name = "Student.findAll", query = "SELECT c FROM Student c")
+@Table(name = "student")
 public class Student implements Serializable {
 
-    private static final long serialVersionUID = -8201800323765310767L;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * StudentID
-     */
     @Id
     @Column(name = "StudentID")
-    private Integer studentID;
+    private Integer studentId;
 
-    /**
-     * StudentGPA
-     */
     @Column(name = "StudentGPA")
-    private Double studentGPA;
+    private Double studentGpa;
 
-    /**
-     * StudentName
-     */
     @Column(name = "StudentName")
     private String studentName;
 
-    /**
-     * PersonID
-     */
     @Column(name = "PersonID")
-    private Integer personID;
+    private Integer personId;
+
+    public Student() {
+    }
+
+    public Student(Integer studentId, Double studentGpa, String studentName, Integer personId) {
+        this.studentId = studentId;
+        this.studentGpa = studentGpa;
+        this.studentName = studentName;
+        this.personId = personId;
+    }
+
+    public Integer getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
+    }
+
+    public Double getStudentGpa() {
+        return studentGpa;
+    }
+
+    public void setStudentGpa(Double studentGpa) {
+        this.studentGpa = studentGpa;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+        return "Student{" +
+                "studentId=" + studentId +
+                ", studentGpa=" + studentGpa +
+                ", studentName='" + studentName + '\'' +
+                ", personId=" + personId +
+                '}';
     }
-
 }

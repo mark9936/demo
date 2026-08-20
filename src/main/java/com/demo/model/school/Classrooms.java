@@ -1,59 +1,70 @@
 package com.demo.model.school;
 
 import java.io.Serializable;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigInteger;
-import java.math.BigDecimal;
-
-import lombok.Data;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
- * @Function: Classrooms.java
- * @Description: Classrooms Entity
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
+ * 教室資料。欄位中的 buildingId 是關聯校舍的識別值；為了讓初學者先專注於 CRUD，
+ * 本範例先以 Integer 保存外鍵，不建立 JPA 關聯物件。
  */
-@Data
 @Entity
-@Table(name = "CLASSROOMS")
-@NamedQuery(name = "Classrooms.findAll", query = "SELECT c FROM Classrooms c")
+@Table(name = "classrooms")
 public class Classrooms implements Serializable {
 
-    private static final long serialVersionUID = -6803828971822182465L;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * RoomNumber
-     */
     @Id
     @Column(name = "RoomNumber")
     private Integer roomNumber;
 
-    /**
-     * HasProjector
-     */
     @Column(name = "HasProjector")
     private String hasProjector;
 
-    /**
-     * BuildingID
-     */
     @Column(name = "BuildingID")
-    private Integer buildingID;
+    private Integer buildingId;
+
+    public Classrooms() {
+    }
+
+    public Classrooms(Integer roomNumber, String hasProjector, Integer buildingId) {
+        this.roomNumber = roomNumber;
+        this.hasProjector = hasProjector;
+        this.buildingId = buildingId;
+    }
+
+    public Integer getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(Integer roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getHasProjector() {
+        return hasProjector;
+    }
+
+    public void setHasProjector(String hasProjector) {
+        this.hasProjector = hasProjector;
+    }
+
+    public Integer getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Integer buildingId) {
+        this.buildingId = buildingId;
+    }
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+        return "Classrooms{" +
+                "roomNumber=" + roomNumber +
+                ", hasProjector='" + hasProjector + '\'' +
+                ", buildingId=" + buildingId +
+                '}';
     }
-
 }

@@ -1,59 +1,73 @@
 package com.demo.model.school;
 
 import java.io.Serializable;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.math.BigInteger;
-import java.math.BigDecimal;
-
-import lombok.Data;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
- * @Function: Buildings.java
- * @Description: Buildings Entity
- * @author: kuo
- * @date: 2023/10/03
- * @MaintenancePersonnel: kuo
+ * 校舍資料。
+ *
+ * <p>{@link Entity} 表示這個 Java 類別要對應到資料庫資料表。
+ * 這個類別同時也是本範例的 POJO：它只保存資料，不負責商業流程。</p>
  */
-@Data
 @Entity
-@Table(name = "BUILDINGS")
-@NamedQuery(name = "Buildings.findAll", query = "SELECT c FROM Buildings c")
+@Table(name = "buildings")
 public class Buildings implements Serializable {
 
-    private static final long serialVersionUID = -6581134394718313970L;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * BuildingID
-     */
+    /** {@link Id} 表示這是每筆資料唯一的主鍵，這個範例由 API 呼叫者提供。 */
     @Id
     @Column(name = "BuildingID")
-    private Integer buildingID;
+    private Integer buildingId;
 
-    /**
-     * BuildingName
-     */
     @Column(name = "BuildingName")
     private String buildingName;
 
-    /**
-     * CollegeName
-     */
     @Column(name = "CollegeName")
     private String collegeName;
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+    public Buildings() {
     }
 
+    public Buildings(Integer buildingId, String buildingName, String collegeName) {
+        this.buildingId = buildingId;
+        this.buildingName = buildingName;
+        this.collegeName = collegeName;
+    }
+
+    public Integer getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Integer buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    public String getCollegeName() {
+        return collegeName;
+    }
+
+    public void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
+    }
+
+    @Override
+    public String toString() {
+        return "Buildings{" +
+                "buildingId=" + buildingId +
+                ", buildingName='" + buildingName + '\'' +
+                ", collegeName='" + collegeName + '\'' +
+                '}';
+    }
 }
